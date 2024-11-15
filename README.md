@@ -23,7 +23,7 @@ pip install scope-cli
 Display a directory's structure along with the size of each folder and file.
 
 ```bash
-scope-cli tree /path/to/directory
+scope tree /path/to/directory
 ```
 
 **Example Output**:
@@ -44,7 +44,7 @@ Check if a specific port is in use, see detailed information about the process, 
 
 #### Check Port Usage
 ```bash
-scope-cli port 8080
+scope port 8080
 ```
 
 **Example Output**:
@@ -60,7 +60,7 @@ Port 8080 is in use by process:
 
 #### Kill Process Using Port
 ```bash
-scope-cli port 8080 --kill
+scope port 8080 --kill
 ```
 
 **Interactive Prompt**:
