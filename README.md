@@ -42,9 +42,12 @@ project (120 MB)
 ### 2. Port Checker
 Check if a specific port is in use, see detailed information about the process, and optionally kill it.
 
+#### Important Note for Ports
+On some systems, accessing detailed port information may require elevated permissions. Use `sudo` if necessary to avoid permission issues.
+
 #### Check Port Usage
 ```bash
-scope port 8080
+sudo scope port 8080
 ```
 
 **Example Output**:
@@ -60,7 +63,7 @@ Port 8080 is in use by process:
 
 #### Kill Process Using Port
 ```bash
-scope port 8080 --kill
+sudo scope port 8080 --kill
 ```
 
 **Interactive Prompt**:
