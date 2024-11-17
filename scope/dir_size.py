@@ -1,11 +1,11 @@
 import os
 
 def get_size(path):
-    if os.path.isfile(path) or os.path.islink(path):  # Check if it's a file or symlink
+    if os.path.isfile(path) or os.path.islink(path):
         return os.path.getsize(path)
-    if os.path.isdir(path):  # Check if it's a directory
+    if os.path.isdir(path):
         return sum(get_size(os.path.join(path, f)) for f in os.listdir(path))
-    return 0  # For other cases like sockets
+    return 0
 
 def display_tree(path, indent=""):
     size = get_size(path)
@@ -13,10 +13,3 @@ def display_tree(path, indent=""):
     if os.path.isdir(path):
         for item in os.listdir(path):
             display_tree(os.path.join(path, item), indent + "  ")
-
-def main():
-    import argparse
-    parser = argparse.ArgumentParser(description="Visualize directory sizes in a tree format.")
-    parser.add_argument("path", nargs="?", default=".", help="Path to the directory (default: current directory).")
-    args = parser.parse_args()
-    display_tree(args.path)

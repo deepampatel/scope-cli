@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="scope-cli",  # Project name for PyPI
-    version="0.2.1",
+    name="scope-cli",
+    version="0.2.2",
     description="A CLI tool for visualizing directory sizes and checking port usage.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -10,10 +10,16 @@ setup(
     author_email="deepam8155@gmail.com",
     url="https://github.com/deepampatel/scope-cli",
     packages=find_packages(),
-    install_requires=["psutil"],
+    install_requires=[
+        "click",
+        "psutil",
+    ],
+    extras_require={
+        "llm": ["openai>1.0.1", "colorama"],  # Optional LLM dependencies
+    },
     entry_points={
         "console_scripts": [
-            "scope=scope.main:main",  # CLI command will be 'scope'
+            "scope=scope.main:main",
         ]
     },
     classifiers=[

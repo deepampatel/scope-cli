@@ -1,22 +1,50 @@
-import sys
-from scope.dir_size import main as dir_size_main
-from scope.port_checker import main as port_checker_main
+import click
+from scope.dir_size import display_tree
+from scope.port_checker import check_port
+
+
+@click.group()
+def cli():
+    """Scope CLI: A versatile tool for developers."""
+    pass
+
+
+@cli.command()
+@click.argument("path", type=click.Path(exists=True, file_okay=False), default=".")
+def tree(path):
+    """Visualize directory sizes in a tree format."""
+    display_tree(path)
+
+
+@cli.command()
+@click.argument("port", type=int)
+@click.option("--kill", is_flag=True, help="Kill the process using the specified port.")
+def port(port, kill):
+    """Check if a port is in use and manage processes."""
+    check_port(port, kill)
+
+
+# Dynamically register the LLM command
+try:
+    from scope.llm_utils import handle_llm_command
+
+    @cli.command()
+    @click.argument("query", type=str)
+    @click.option("--execute", is_flag=True, help="Execute the suggested command.")
+    def llm(query, execute):
+        """Use an LLM to assist with CLI commands."""
+        handle_llm_command(query, execute)
+
+except ImportError:
+    @cli.command()
+    @click.argument("query", type=str)
+    @click.option("--execute", is_flag=True, help="Execute the suggested command.")
+    def llm():
+        """LLM functionality is not available. Install optional dependencies with: pip install scope-cli[llm]"""
+        print(
+            "LLM functionality is unavailable. Install optional dependencies with: pip install scope-cli[llm]"
+        )
+
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: scope [tree|port] [arguments]")
-        sys.exit(1)
-
-    command = sys.argv[1]
-    args = sys.argv[2:]
-
-    if command == "tree":
-        sys.argv = [sys.argv[0]] + args
-        dir_size_main()
-    elif command == "port":
-        sys.argv = [sys.argv[0]] + args
-        port_checker_main()
-    else:
-        print(f"Unknown command: {command}")
-        print("Available commands: tree, port")
-        sys.exit(1)
+    cli()
