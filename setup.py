@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="scope-cli",
-    version="0.2.2",
+    version="0.2.3",
     description="A CLI tool for visualizing directory sizes and checking port usage.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
